@@ -9,7 +9,8 @@ export default async function Page({
   const { q } = await searchParams;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/book/search?q=${q}`
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/book/search?q=${q}`,
+    { cache: 'force-cache' }
   );
   if (!res.ok) {
     return <div>Failed to fetch books...</div>;

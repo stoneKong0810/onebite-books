@@ -1,5 +1,12 @@
+import { notFound } from 'next/navigation';
 import { BookData } from '@/types';
 import style from './page.module.css';
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return [{ id: '1' }, { id: '2' }, { id: '3' }];
+}
 
 export default async function Page({
   params,
@@ -10,6 +17,9 @@ export default async function Page({
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/book/${id}`);
   if (!res.ok) {
+    if (res.status === 404) {
+      notFound();
+    }
     return <div>Failed to fetch book...</div>;
   }
   const book: BookData = await res.json();
