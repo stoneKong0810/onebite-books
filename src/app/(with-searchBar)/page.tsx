@@ -3,7 +3,9 @@ import style from './page.module.css';
 import { BookData } from '@/types';
 
 async function AllBooks() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/book`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/book`, {
+    cache: 'force-cache',
+  });
   if (!res.ok) {
     return <div>Failed to fetch books...</div>;
   }
@@ -24,7 +26,7 @@ async function RecommendedBooks() {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/book/random`,
     {
       next: {
-        revalidate: 100,
+        revalidate: 5,
       },
     }
   );

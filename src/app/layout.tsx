@@ -4,10 +4,13 @@ import style from './layout.module.css';
 import { BookData } from '@/types';
 
 async function Footer() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/book`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/book`, {
+    cache: 'force-cache',
+  });
   if (!res.ok) {
     return <footer>제작 @stoneKong</footer>;
   }
+
   const books: BookData[] = await res.json();
   const bookCount = books.length;
 
